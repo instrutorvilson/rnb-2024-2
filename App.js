@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   const[nome, setNome] = useState('')
   const[sobreNome, setSobreNome] = useState('')
   const[nomeCompleto, setNomeCompleto] = useState('')
 
+  const nomeRef = useRef(null)
+
   function gerarNomeCompleto(){
     if(nome === ''){
-      alert('Informe nome')
+      Toast.show({
+        type: 'error',
+        text1: 'Atenção',
+        text2: 'O nome deve ser informado'
+      });
+      nomeRef.current.focus()
       return
     }
 
     if(sobreNome === ''){
-      alert('Informe sobrenome')
+      Toast.show({
+        type: 'error',
+        text1: 'Atenção',
+        text2: 'O sobrenome deve ser informado'
+      });
       return
     }
     setNomeCompleto(nome + " " + sobreNome)
@@ -29,6 +40,7 @@ export default function App() {
              placeholder="Informe nome"
              defaultValue={nome}
              onChangeText={(txt)=>setNome(txt)}
+             ref={nomeRef}
           />
           <Text style={styles.label}>Informe sobrenome</Text>
           <TextInput 
@@ -48,7 +60,8 @@ export default function App() {
 
           <Text>{nomeCompleto}</Text>
       </View>
-      <StatusBar style="auto" />
+      
+      <Toast />
     </View>
   );
 }
