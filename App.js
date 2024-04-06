@@ -1,22 +1,17 @@
-import { StyleSheet,  View } from 'react-native';
+import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import NomeCompleto from './src/componentes/nomeCompleto';
-
+import styles from './src/estilos/estilos';
+import Cadastro from './src/componentes/cadastro';
 export default function App() { 
   return (
     <View style={styles.container}>
-       <NomeCompleto />
-      
+      { /*<NomeCompleto /> */}
+       
+       <Cadastro />
+
       <Toast />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }  
-});

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import { Text, View, TextInput, Pressable } from 'react-native';
 import Toast from 'react-native-toast-message';
-
+import styles from  '../estilos/estilos'
 export default function NomeCompleto() {
   const[nome, setNome] = useState('')
   const[sobreNome, setSobreNome] = useState('')
@@ -64,24 +64,4 @@ export default function NomeCompleto() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input:{
-    borderBottomWidth: 1,
-    padding: 10,
-    marginBottom: 10
-  },
-  label:{
-     fontSize: 18 
-  },
-  btacao:{
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 10
-  }
-});
+
