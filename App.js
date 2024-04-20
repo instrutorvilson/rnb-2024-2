@@ -1,19 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList, Button, Alert } from 'react-native';
 import CardContato from './CardContato';
+import { useState } from 'react';
 
-const contatos = [
+/*var contatos = [
   {
     id:1,
-    nome:'maria'
+    nome:'mariaz'
   },
   {
     id:2,
     nome:'Joao'
   }
-]
+]*/
 
-function Filho(props){
+/*function Filho(props){
   return(
      <View>
        <Text>Titulo {props.mensagem.title}</Text>
@@ -26,11 +26,12 @@ function Filho(props){
   )
 }
 
+/*
 function Pai(){
   const mensagem = {title:'sei lá', descricao: 'vc está deserdado'}
 
   function mensagemRecebidaDoFilho(texto){
-    Alert.alert(texto)
+    alert(texto)
   }
   return(
     <View>
@@ -38,21 +39,50 @@ function Pai(){
       </View>
   )
 }
+*/
 
 
 export default function App() {
+  const[contatos, setContatos] = useState([
+    {
+      id:1,
+      nome:'mariaz'
+    },
+    {
+      id:2,
+      nome:'Joao'
+    }
+  ])
+  function excluir(id){
+    /* let oldData = contatos;
+     console.log(oldData)
+     let newData = oldData.filter(ct => ct.id != id)
+     console.log(newData)
+     contatos = newData
+     console.log(contatos)*/
+
+     let oldData = [...contatos]
+     console.log(oldData)
+     let newData = oldData.filter(ct => ct.id != id)
+     console.log(newData)
+     setContatos(newData)
+  }
+
   return (
     <View style={styles.container}>
       <Text>Lista de Contatos</Text>
       
-      {/*<FlatList 
+      <FlatList 
          data={contatos}
-         renderItem={({item})=> <CardContato id={item.id} nome={item.nome}/>}
-  />      */}
-      
-      <Pai />
-
-    </View>
+         renderItem={({item})=> 
+            <CardContato  
+              id={item.id} 
+              nome={item.nome}
+              onDelete={excluir}
+            />}
+     />   
+     
+   </View>
   );
 }
 

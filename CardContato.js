@@ -8,7 +8,10 @@ export default function CardContato(props) {
                 <Text>Nome: {props.nome}</Text>
             </View>
             <View style={styles.containerBotao}>
-                <TouchableOpacity style={styles.botao}>
+                <TouchableOpacity 
+                    style={styles.botao}
+                    onPress={()=>props.onDelete(props.id)}    
+                >
                     <Text style={{color:'red'}}>Excluir</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.botao}>
