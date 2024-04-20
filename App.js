@@ -1,10 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import CardContato from './CardContato';
+
+const contatos = [
+  {
+    id:1,
+    nome:'maria'
+  },
+  {
+    id:2,
+    nome:'Joao'
+  }
+]
 
 export default function App() {
+  
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Lista de Contatos</Text>
+      
+      <FlatList 
+         data={contatos}
+         renderItem={({item})=> <CardContato id={item.id} nome={item.nome}/>}
+      />      
       <StatusBar style="auto" />
     </View>
   );
