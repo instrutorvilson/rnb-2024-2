@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, FlatList, Button, Alert } from 'react-native';
 import CardContato from './CardContato';
 import { useState } from 'react';
+import { TextInput } from 'react-native-web';
 
 /*var contatos = [
   {
@@ -53,6 +54,8 @@ export default function App() {
       nome:'Joao'
     }
   ])
+
+  const[nome, setNome] = useState('')
   function excluir(id){
     /* let oldData = contatos;
      console.log(oldData)
@@ -68,10 +71,32 @@ export default function App() {
      setContatos(newData)
   }
 
+  function gravar(){
+    if(nome === ''){
+       alert('Informe nome')
+       return
+    }
+     let contato = {id: contatos.length+1, nome:nome}
+     setContatos([...contatos,contato])
+     setNome('')
+  }
+
   return (
     <View style={styles.container}>
       <Text>Lista de Contatos</Text>
-      
+      <View style={styles.containerNovo}>
+          <Text>Novo Contato</Text>
+          <TextInput 
+              style={styles.input}
+              placeholder='Informe nome'
+              value={nome}
+              onChange={txt => setNome(txt.target.value)}
+          />
+          <Button 
+             title='Gravar'
+             onPress={gravar}
+          />
+      </View>
       <FlatList 
          data={contatos}
          renderItem={({item})=> 
@@ -93,4 +118,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerNovo:{
+    backgroundColor: 'red',
+    marginVertical: 10
+  },
+  input:{
+    backgroundColor: 'white',
+    marginVertical: 5,
+    padding: 5
+  }
 });
