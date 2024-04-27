@@ -1,0 +1,22 @@
+criar pasta api-contatos
+ npm init --y
+
+npm install express
+
+criar arquivo index.js
+
+alterar package.json
+
+"scripts": {
+    "start": "npx nodemon index.js"
+  }
+
+executar o terminal
+npm run start
+
+correções da api
+npm install cors
+npx create-expo-app app-agenda
+
+usando axios
+npm install axios
