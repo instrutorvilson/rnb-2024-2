@@ -5,10 +5,13 @@ import {
   FlatList,
   TextInput,
   Pressable
-} from 'react-native';
+} from 'react-native'
+
+import axios from 'axios'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default function App() {
-  const[id, setId] = useState(0)
+  const [id, setId] = useState(0)
   const [contatos, setContatos] = useState([])
   const [nome, setNome] = useState('Antonio')
   const [email, setEmail] = useState('antonio@gmail.com')
@@ -18,48 +21,52 @@ export default function App() {
   useEffect(() => { load() }, [contatos])
 
   function load() {
-    fetch('http://localhost:3000/contatos')
-      .then(response => response.json())
-      .then(data => setContatos(data))
+    axios.get('http://localhost:3000/contatos')
+      .then(response => setContatos(response.data))
+
   }
 
   function salvar() {
-    let payload = {
-      nome: nome,
-      email: email,
-      fone: fone
-    }
     if (isEditing) {
-      fetch(`http://localhost:3000/contatos/${id}`,
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(response => load())
-    } else {
-      fetch('http://localhost:3000/contatos',
+      axios.put(`http://localhost:3000/contatos/${id}`,
         {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
+          id: id,
+          nome: nome,
+          email: email,
+          fone: fone
+        }
+      )
         .then(response => load())
+    } else {
+      axios.post('http://localhost:3000/contatos',
+        {
+          nome: nome,
+          email: email,
+          fone: fone
+        }
+      )
+        .then(response => load())
+        .catch(error => console.log(error))
     }
     setId(0)
     setIsEditing(false)
   }
 
-  function editar(id){
+  async function editar(id) {
     setId(id)
     setIsEditing(true)
-    fetch(`http://localhost:3000/contatos/${id}`)
-      .then(response => response.json())
-      .then(data => {
-          setNome(data.nome)
-          setEmail(data.email)
-          setFone(data.fone)
-      })
+    /* fetch(`http://localhost:3000/contatos/${id}`)
+       .then(response => response.json())
+       .then(data => {
+           setNome(data.nome)
+           setEmail(data.email)
+           setFone(data.fone)
+       })*/
+    let response = await fetch(`http://localhost:3000/contatos/${id}`)
+    let data = await response.json()
+    setNome(data.nome)
+    setEmail(data.email)
+    setFone(data.fone)
   }
 
   return (
@@ -93,6 +100,8 @@ export default function App() {
         title='Salvar'
         onPress={salvar}
       />
+      <Text>Id:{id}</Text>
+      <Text>isEditing: {isEditing}</Text>
       <FlatList
         data={contatos}
         renderItem={({ item }) => <Card contato={item} onEditar={editar} />}
@@ -103,12 +112,9 @@ export default function App() {
 
 const Card = (props) => {
 
-  function excluir() {
-    fetch(`http://localhost:3000/contatos/${props.contato.id}`,
-      {
-        method: 'DELETE'
-      })
-      .then(response => load())
+  async function excluir() {
+    await axios.delete(`http://localhost:3000/contatos/${props.contato.id}`)
+    load()
   }
 
   return (
@@ -120,12 +126,17 @@ const Card = (props) => {
         <Pressable
           onPress={excluir}
         >
-          <Text style={styles.excluir}>Excluir</Text>
+          <View style={styles.icone}>
+            <Text style={styles.excluir}>Excluir</Text>
+            <Icon name='trash' size={25} color={'red'} />
+          </View>
         </Pressable>
         <Pressable
-          onPress={()=>props.onEditar(props.contato.id)}
+           style={styles.icone}
+           onPress={() => props.onEditar(props.contato.id)}
         >
           <Text style={styles.editar}>Editar</Text>
+          <Icon name='edit' size={25} color={'green'} />
         </Pressable>
       </View>
     </View>
@@ -150,9 +161,16 @@ const styles = StyleSheet.create({
   }
   ,
   excluir: {
-    color: 'red'
+    color: 'red',
+    marginRight: 5
   },
   editar: {
     color: 'green'
+  },
+  icone: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 5,
+    backgroundColor: '#aaa'
   }
 });
