@@ -1,34 +1,36 @@
 import { useRef, useState } from "react"
 import { Stack, TextInput,Button, AppBar } from "@react-native-material/core"
 import Toast from 'react-native-toast-message'
-import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import app from './firebaseConfig'
 
 
-export default function Caduser(){
+export default function Login(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const refNome = useRef(null)
     const refPassword = useRef(null)
     
-    function criarUser(){
+    function logar(){
        if(!validaUser()) {
         return
        }
 
        const auth = getAuth(app)
-       createUserWithEmailAndPassword(auth,email,password)
-       .then(userCredential => {
+       signInWithEmailAndPassword(auth,email,password)
+       .then((userCredential) => {
           const user = userCredential.user
           Toast.show({
             type:'success',
             text1:'Informação',
-            text2:'Usuário cadastrado com sucesso'
+            text2:'Logado com sucesso'
           })
-         // limpar()
-         setEmail('')
-         setPassword('')
+          //armazenar dados do login no asynstorage
+          
+           AsyncStorage.setItem('user', user.accessToken)
+          //navegar para Home
        })
        .catch(error => Toast.show({
         type:'error',
@@ -48,11 +50,11 @@ export default function Caduser(){
               return false 
         }
 
-        if(password.length < 6){
+        if(password == ''){
             Toast.show({
                 type:'info',
                 text1:'Informação',
-                text2:'A senha deve ter no mínimo 6 caracteres'
+                text2:'Informe a senha'
               })
               refPassword.current.focus()
               return false  
@@ -61,14 +63,10 @@ export default function Caduser(){
         return true
     }
 
-  /*  function limpar(){
-        setEmail('')
-        setPassword('')
-    }*/
     return(
         <>
         <AppBar 
-           title="Register User" 
+           title="Fazer login" 
            style={{width: '100%', alignItems:'center', marginVertical: 15}}
            color={'#ccc'}
            elevation={false}
@@ -90,7 +88,7 @@ export default function Caduser(){
             />
 
             <Stack style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                <Button title="Gravar" onPress={criarUser}/>
+                <Button title="Logar" onPress={logar}/>
                 <Button title="Cancelar" color="red" onPress={()=>{
                     setEmail('')
                     setPassword('')}}

@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 import Caduser from './caduser';
+import Login from './login';
 
 
 export default function App() {
   return(
     <View style={styles.container}>
-       <Caduser /> 
+       <Login />
        <Toast 
-       
+         
        /> 
     </View>
   );
