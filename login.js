@@ -6,7 +6,7 @@ import { getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import app from './firebaseConfig'
 
 
-export default function Login(){
+export default function Login({navigation}){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -89,10 +89,7 @@ export default function Login(){
 
             <Stack style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                 <Button title="Logar" onPress={logar}/>
-                <Button title="Cancelar" color="red" onPress={()=>{
-                    setEmail('')
-                    setPassword('')}}
-                />
+                <Button title="Registrar" color="#080" onPress={() => navigation.navigate('register')}  />
             </Stack>
         </Stack>
         </>
