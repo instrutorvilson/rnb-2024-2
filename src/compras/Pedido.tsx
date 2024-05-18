@@ -1,10 +1,12 @@
 import {useState} from 'react'
 import {View, Text, StyleSheet, TextInput, Button} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import app from '../configuracao/firebaseConfig'
-import { getFirestore, collection, addDoc } from "firebase/firestore"
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore"
+import { useEffect } from 'react'
 
-export default function Pedido(){
+export default function Pedido({navigation}){
     const[cliente, setCliente] = useState('Ray da Silva')
     const[produto, setProduto] = useState('Torresmo')
     const[quantidade, setQuantidade] = useState('1')
@@ -14,6 +16,22 @@ export default function Pedido(){
       var db = getFirestore(app)
       await addDoc(collection(db,'pedidos'),{cliente, produto, quantidade})
       alert('Pedido cadastrado com sucesso')
+    }
+
+    useEffect(() => { verificaUserLogado() }, [])
+
+    async function verificaUserLogado() {
+        let userLogado = await AsyncStorage.getItem('userLogado')
+        if (userLogado == null) {
+            navigation.navigate('login')
+        }
+    }
+
+
+   async function carregar(){
+      var db = getFirestore(app)
+      var query = await getDocs(collection(db, 'pedidos'))
+      query.forEach((doc) => console.log(`${doc.id} dados: ${doc.data().cliente}`))
     }
 
     return(
@@ -44,6 +62,7 @@ export default function Pedido(){
             /> 
             <View>
                 <Button title="Gravar" onPress={salvar}/>
+                <Button title='Carregar' onPress={carregar} />
             </View>
         </View>
     )
