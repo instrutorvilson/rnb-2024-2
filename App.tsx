@@ -12,9 +12,10 @@ import RouteAdm from './src/rotas/routeAdm';
 
 const Tab = createMaterialTopTabNavigator();
 export default function App() {
+  
   return (
     <NavigationContainer>
-       <Tab.Navigator>
+        <Tab.Navigator>
           <Tab.Screen name='financeiro' component={RouteFinanceiro} />
           <Tab.Screen name='compras' component={RouteCompras} />
           <Tab.Screen name='adm' component={RouteAdm} />
