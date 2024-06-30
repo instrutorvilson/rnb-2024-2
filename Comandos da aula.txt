@@ -1,0 +1,12 @@
+https://github.com/instrutorvilson/rnb-2024-2
+
+npx create-expo-app app-aula2 --template
+
+npm run web
+
+npm install @react-native-vector-icons/fontawesome6
+npm install react-native-toast-message
+
+-> Criar um formulário para inserir contatos
+
+https://mighty.tools/mockmind-api/content/human/65.jpg
