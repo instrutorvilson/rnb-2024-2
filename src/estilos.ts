@@ -29,6 +29,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center'
+    },
+    rotulo:{
+      fontSize: 24,
+      alignSelf: 'flex-start',
+      marginTop: 10
     }
   });
 
