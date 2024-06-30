@@ -3,6 +3,7 @@ import CardContato from './cardContato'
 import styles from './estilos'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useRef, useState } from 'react'
+import Toast from 'react-native-toast-message'
 
 export default function ListaFrutas() {
     const [nome, setNome] = useState('Joana')
@@ -43,12 +44,20 @@ export default function ListaFrutas() {
 
     function adicionar() {
         if (nome == '') {
-            alert('O nome deve ser informado')
+            Toast.show({
+                type:'error',
+                text1: 'Atenção',
+                text2: 'O nome precisa ser informado'
+            })
             refNome.current?.focus()
             return
         }
         if (email == '') {
-            alert('O email deve ser informado')
+            Toast.show({
+                type:'error',
+                text1: 'Atenção',
+                text2: 'O email precisa ser informado'
+            })
             refEmail.current?.focus()
             return
         }
@@ -56,7 +65,11 @@ export default function ListaFrutas() {
         setNome('')
         setEmail('')
 
-        alert('contato cadastrado')
+        Toast.show({
+            type:'success',
+            text1: 'Parabéns',
+            text2: 'Contato cadastrado com sucesso'
+        })
     }
     return (
         <View>
