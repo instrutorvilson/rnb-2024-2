@@ -1,17 +1,32 @@
 import { View, Text, TextInput, Image, Pressable } from "react-native"
 import styles from "./estilos"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Toast from 'react-native-toast-message'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import urlFotoBase from './utils'
 import ListaContatos from "./listaContatos"
 
-const CadContato = () => {
+const CadContato = ({route, navigation }) => {
     const [nome, setNome] = useState('Joana')
     const [email, setEmail] = useState('joana@gmail.com')
     const [idFoto, setIdFoto] = useState('5')
     const refNome = useRef(null)
     const refEmail = useRef(null)
+
+    const { id } = route.params
+
+    useEffect(()=> {
+            if(id){
+                fetch(`http://localhost:3000/contatos/${id}`)
+                .then(response => response.json())
+                .then(dados => {
+                    setNome(dados.nome)
+                    setEmail(dados.email)
+                    setIdFoto(dados.foto)
+                })
+            }
+        }        
+    ,[])
 
     function adicionar() {
         if (nome == '') {
@@ -52,6 +67,7 @@ const CadContato = () => {
                 text1: 'Parabéns',
                 text2: 'Contato cadastrado com sucesso'
             })
+            navigation.navigate('lista')
         })        
     }
 

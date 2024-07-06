@@ -3,7 +3,7 @@ import CardContato from './cardContato'
 import styles from './estilos'
 import { useEffect, useState } from 'react'
 
-export default function ListaContatos() { 
+export default function ListaContatos({navigation}) { 
     const[contatos, setContatos] = useState([])
     const[recarregar, setCarregar] = useState(false)
     
@@ -20,8 +20,14 @@ export default function ListaContatos() {
                 contentContainerStyle={{ marginHorizontal: 20 }}
                 data={contatos}
                 renderItem={({ item }) =>
-                    <CardContato contato={item} atualizar={setCarregar}/>
-                }            
+                    <CardContato 
+                       contato={item} 
+                       atualizar={setCarregar}
+                       navigation={navigation}
+                    />
+                }
+                
+
             />
         </View>
     )

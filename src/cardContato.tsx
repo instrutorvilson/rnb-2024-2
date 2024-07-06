@@ -46,7 +46,9 @@ export default function CardContato(props: any) {
                     >
                         <Ionicons name='trash' size={20} color='red'></Ionicons>
                     </Pressable>
-                    <Pressable>
+                    <Pressable
+                        onPress={() => props.navigation.navigate('cadastro',{id:props.contato.id})}
+                    >
                         <Ionicons name='pencil' size={20} color='blue'></Ionicons>
                     </Pressable>
                 </View>
