@@ -1,0 +1,19 @@
+criar um servidor de backend
+> npm install -g json-server
+
+Criar api
+db.json
+{
+    "contatos":[
+        { id: 1, nome: 'maria', email: 'maria@gmail.com', foto:'https://mighty.tools/mockmind-api/content/human/65.jpg'}
+    ]
+}
+
+executar o servidor
+> npx json-server --watch db.json
+
+localhost:3000/contatos - GET
+localhost:3000/contatos - POST
+localhost:3000/contatos/1 - GET
+localhost:3000/contatos/1 - PUT
+localhost:3000/contatos/1 - DELETE
