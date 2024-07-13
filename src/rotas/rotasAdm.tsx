@@ -1,8 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import CreateUser from '../pages/adm/createUser'
 import Permissao from '../pages/adm/permissao'
 import Principal from '../pages/adm/principal'
-const Stack = createStackNavigator()
+const Stack = createBottomTabNavigator()
 export default function RotasAdm(){
     return(
       <Stack.Navigator>
